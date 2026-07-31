@@ -63,11 +63,39 @@ public class StandAloneTest {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ngx-toastr")));
         //Wait until the success message (green toast notification) is no longer visible.
         
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Checkout']")));
-        //Wait until the Checkout button is visible and Selenium can actually click it.
-
-        driver.findElement(By.xpath("//button[normalize-space()='Checkout']")).click();
+     // Click Checkout
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[normalize-space()='Checkout']")));
         
-       // driver.quit();
+        driver.findElement(By.xpath("//button[normalize-space()='Checkout']")).click();
+
+        // Enter country
+        WebElement country = driver.findElement(By.cssSelector("[placeholder='Select Country']"));
+        country.sendKeys("India");
+
+        // Wait for country suggestions
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
+        
+     // Click the India suggestion
+        driver.findElement(By.cssSelector(".ta-item.list-group-item.ng-star-inserted:last-child")).click();
+
+     // Wait until suggestions disappear
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ta-results")));
+
+        // Wait until Place Order button is clickable
+        WebElement placeOrder = wait.until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector(".action__submit")));
+
+        // Click Place Order
+        placeOrder.click();
+
+        // Verify confirmation
+        String output = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".hero-primary")))
+                .getText();
+
+        Assert.assertEquals(output, "THANKYOU FOR THE ORDER.");
+        
+        driver.quit();
     }
 }
