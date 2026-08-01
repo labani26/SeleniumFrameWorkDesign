@@ -15,6 +15,8 @@ import PageObjects.LandingPage;
 import PageObjects.ProductCatalogue;
 
 public class SubmitAloneTest {
+	
+	static String ProductName = "IPHONE 13 PRO";
 
     public static void main(String[] args) {
 
@@ -40,11 +42,12 @@ public class SubmitAloneTest {
 //        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
 //        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
 
-        WebElement prod = products.stream()
-                .filter(product -> product.findElement(By.cssSelector("b"))
-                        .getText().equalsIgnoreCase("IPHONE 13 PRO"))
-                .findFirst()
-                .orElseThrow();
+//        WebElement prod = products.stream()
+//                .filter(product -> product.findElement(By.cssSelector("b"))
+//                        .getText().equalsIgnoreCase(ProductName))
+//                .findFirst()
+//                .orElseThrow();
+        
         //equalsIgnoreCase() - It compares two strings without considering uppercase or lowercase letters.
 
         // Click Add To Cart

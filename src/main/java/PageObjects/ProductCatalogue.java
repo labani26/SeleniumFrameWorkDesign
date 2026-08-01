@@ -40,4 +40,13 @@ public class ProductCatalogue extends AbstructComponent {
 		return products;
 	}
 	
+	public WebElement GetProductByName(String ProductName) {
+		
+		WebElement prod = products.stream()
+                .filter(product -> product.findElement(By.cssSelector("b"))
+                .getText().equalsIgnoreCase(ProductName)).findFirst().orElseThrow();
+		
+		return prod;
+	}
+	
 }
