@@ -9,11 +9,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class ProductCatalogue {
+import AbstructComponents.AbstructComponent;
+
+public class ProductCatalogue extends AbstructComponent {
 	
 	WebDriver driver;
 	
 	public ProductCatalogue(WebDriver driver) {
+		
+		super(driver);
 		
 		//initialization
 		this.driver = driver;
@@ -26,5 +30,14 @@ public class ProductCatalogue {
    
 	@FindBy(css=".mb-3")
 	List<WebElement> products;
+	//List<WebElement> = plural
+	
+	By ProductBy = By.cssSelector(".mb-3");
+	
+	public List<WebElement> getProductList(){
+		
+		waitForElementToAppear(ProductBy);
+		return products;
+	}
 	
 }

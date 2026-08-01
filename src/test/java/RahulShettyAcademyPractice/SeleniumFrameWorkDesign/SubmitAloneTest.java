@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import PageObjects.LandingPage;
+import PageObjects.ProductCatalogue;
 
 public class SubmitAloneTest {
 
@@ -31,12 +32,13 @@ public class SubmitAloneTest {
 //        driver.findElement(By.id("userPassword")).sendKeys("Labani@26");
 //        driver.findElement(By.id("login")).click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        // Wait until products are loaded
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-
-        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
+        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+        List<WebElement>products = productCatalogue.getProductList();
+        
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        // Wait until products are loaded
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
+//        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
 
         WebElement prod = products.stream()
                 .filter(product -> product.findElement(By.cssSelector("b"))

@@ -6,20 +6,24 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LandingPage {
+import AbstructComponents.AbstructComponent;
+
+public class LandingPage extends AbstructComponent {
 	
 	WebDriver driver;
 	
 	public LandingPage(WebDriver driver) {
 		
+		 super(driver);
+		 
 		//initialization
 		this.driver = driver;
 		PageFactory.initElements(driver,this);
 		//this - refers to current class driver(WebDriver driver)
 		//Find all the @FindBy elements and connect them with the webpage.
+	 
 	}
 
-	
     //WebElement Email = driver.findElement(By.id("userEmail"));
     
     @FindBy(id="userEmail")
