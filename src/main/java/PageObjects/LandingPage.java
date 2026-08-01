@@ -1,6 +1,6 @@
 package PageObjects;
 
-import org.openqa.selenium.By;
+//import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,7 +15,7 @@ public class LandingPage {
 		//initialization
 		this.driver = driver;
 		PageFactory.initElements(driver,this);
-		//this - refers to current class driver
+		//this - refers to current class driver(WebDriver driver)
 		//Find all the @FindBy elements and connect them with the webpage.
 	}
 
@@ -31,4 +31,16 @@ public class LandingPage {
     @FindBy(id="login")
     WebElement Submit;
     
+    public void LoginApplication(String Email, String Password) {
+    
+    	UserEmail.sendKeys(Email);
+    	UserPassword.sendKeys(Password);
+    	Submit.click();
+     	
+    }
+    
+    public void goTo() {
+    	
+    	 driver.get("https://rahulshettyacademy.com/client/#/auth/login");
+    }
 }
