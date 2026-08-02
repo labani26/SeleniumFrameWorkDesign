@@ -32,12 +32,23 @@ public class ProductCatalogue extends AbstructComponent {
 	List<WebElement> products;
 	//List<WebElement> = plural
 	
+	@FindBy(css=".ng-animating")
+	List<WebElement> Spinner;
+	
 	By ProductBy = By.cssSelector(".mb-3");
+	By ProductAddToCart = By.cssSelector("button:last-of-type");
+	By ToastMessage = By.cssSelector("toast-container");
+	By ProductIs = By.cssSelector(".ng-animating");
 	
 	public List<WebElement> getProductList(){
 		
 		waitForElementToAppear(ProductBy);
 		return products;
+	}
+	
+	public List<WebElement> ProductList(){
+		waitForElementToDisappear(ProductIs);
+		return Spinner;
 	}
 	
 	public WebElement GetProductByName(String ProductName) {
@@ -48,5 +59,16 @@ public class ProductCatalogue extends AbstructComponent {
 		
 		return prod;
 	}
+	
+	public void AddProductToCart(String ProductName) {
+		
+		WebElement prod = GetProductByName(ProductName);
+		prod.findElement(ProductAddToCart).click();
+		waitForElementToAppear(ToastMessage);
+		waitForElementToDisappear(ProductIs);
+		
+	}
+	
+	
 	
 }

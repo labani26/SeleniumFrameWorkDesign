@@ -51,14 +51,17 @@ public class SubmitAloneTest {
         //equalsIgnoreCase() - It compares two strings without considering uppercase or lowercase letters.
 
         // Click Add To Cart
-        prod.findElement(By.cssSelector("button:last-of-type")).click();
+       //  prod.findElement(By.cssSelector("button:last-of-type")).click();
         //:last-of-type → Selects the last button among its sibling buttons.
 
+        productCatalogue.AddProductToCart(ProductName);
+        
+        
         // Wait for success message
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toast-container")));
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toast-container")));
 
         // Wait until loading animation disappears
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ng-animating")));
+       // wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ng-animating")));
 
         // Click Cart
         driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
