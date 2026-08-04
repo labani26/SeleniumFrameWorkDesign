@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import PageObjects.CartPage;
+import PageObjects.CheckoutPage;
 import PageObjects.LandingPage;
 import PageObjects.ProductCatalogue;
 
@@ -83,29 +84,32 @@ public class SubmitAloneTest {
      // Click Checkout
 //        wait.until(ExpectedConditions.elementToBeClickable(
 //                By.xpath("//button[normalize-space()='Checkout']")));
-        cartPage.GoToCheckOut();
+        CheckoutPage CheckoutPage = cartPage.GoToCheckOut();
+        CheckoutPage.selectCountry("India");
+        ConfirmationPage CheckoutPage.PlaceOrder();
         
-        driver.findElement(By.xpath("//button[normalize-space()='Checkout']")).click();
+        
+       // driver.findElement(By.xpath("//button[normalize-space()='Checkout']")).click();
 
         // Enter country
-        WebElement country = driver.findElement(By.cssSelector("[placeholder='Select Country']"));
-        country.sendKeys("India");
-
-        // Wait for country suggestions
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-        
-     // Click the India suggestion
-        driver.findElement(By.cssSelector(".ta-item.list-group-item.ng-star-inserted:last-child")).click();
-
-     // Wait until suggestions disappear
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ta-results")));
+//        WebElement country = driver.findElement(By.cssSelector("[placeholder='Select Country']"));
+//        country.sendKeys("India");
+//
+//        // Wait for country suggestions
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
+//        
+//     // Click the India suggestion
+//        driver.findElement(By.cssSelector(".ta-item.list-group-item.ng-star-inserted:last-child")).click();
+//
+//     // Wait until suggestions disappear
+//        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ta-results")));
 
         // Wait until Place Order button is clickable
-        WebElement placeOrder = wait.until(
-                ExpectedConditions.elementToBeClickable(By.cssSelector(".action__submit")));
-
-        // Click Place Order
-        placeOrder.click();
+//        WebElement placeOrder = wait.until(
+//                ExpectedConditions.elementToBeClickable(By.cssSelector(".action__submit")));
+//
+//        // Click Place Order
+//        placeOrder.click();
 
         // Verify confirmation
         String output = wait.until(

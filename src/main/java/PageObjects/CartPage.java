@@ -46,7 +46,7 @@ public class CartPage extends AbstructComponent{
 	public CheckoutPage GoToCheckOut() {
 		CheckOut.click();
 		waitForElementToDisappear(InvisibleProduct);
-		return new CheckoutPage();
+		return new CheckoutPage(driver);
 	}
 	
 
