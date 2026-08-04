@@ -35,11 +35,13 @@ public class LandingPage extends AbstructComponent {
     @FindBy(id="login")
     WebElement Submit;
     
-    public void LoginApplication(String Email, String Password) {
+    public ProductCatalogue LoginApplication(String Email, String Password) {
     
     	UserEmail.sendKeys(Email);
     	UserPassword.sendKeys(Password);
     	Submit.click();
+    	ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+    	return productCatalogue;
      	
     }
     

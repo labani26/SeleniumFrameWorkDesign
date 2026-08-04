@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import PageObjects.CartPage;
 import PageObjects.LandingPage;
 import PageObjects.ProductCatalogue;
 
@@ -28,13 +29,12 @@ public class SubmitAloneTest {
         
         homePage.goTo();
         
-        homePage.LoginApplication("mail2labanisardar@gmail.com","Labani@26");
+        ProductCatalogue productCatalogue = homePage.LoginApplication("mail2labanisardar@gmail.com","Labani@26");
 
 //        driver.findElement(By.id("userEmail")).sendKeys("mail2labanisardar@gmail.com");
 //        driver.findElement(By.id("userPassword")).sendKeys("Labani@26");
 //        driver.findElement(By.id("login")).click();
-
-        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+        
         List<WebElement>products = productCatalogue.getProductList();
         
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -56,6 +56,8 @@ public class SubmitAloneTest {
 
         productCatalogue.AddProductToCart(ProductName);
         
+        CartPage cartPage = productCatalogue.CartPage();
+        
         
         // Wait for success message
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toast-container")));
@@ -64,22 +66,24 @@ public class SubmitAloneTest {
        // wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ng-animating")));
 
         // Click Cart
-        driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
+        //driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
 
         // Verify product in cart
-        List<WebElement> cartProducts = driver.findElements(By.xpath("//*[@class='cartSection']/h3"));
-
-        boolean match = cartProducts.stream()
-                .anyMatch(cart -> cart.getText().equalsIgnoreCase("IPHONE 13 PRO"));
-
+//        List<WebElement> cartProducts = driver.findElements(By.xpath("//*[@class='cartSection']/h3"));
+//
+//        boolean match = cartProducts.stream()
+//                .anyMatch(cart -> cart.getText().equalsIgnoreCase(ProductName));        
+        
+        Boolean match = cartPage.VerifyProductDisplay(ProductName);    
         Assert.assertTrue(match);
         
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ngx-toastr")));
+       // wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ngx-toastr")));
         //Wait until the success message (green toast notification) is no longer visible.
         
      // Click Checkout
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//button[normalize-space()='Checkout']")));
+//        wait.until(ExpectedConditions.elementToBeClickable(
+//                By.xpath("//button[normalize-space()='Checkout']")));
+        cartPage.GoToCheckOut();
         
         driver.findElement(By.xpath("//button[normalize-space()='Checkout']")).click();
 
