@@ -20,14 +20,21 @@ import PageObjects.ProductCatalogue;
 public class SubmitAloneTest {
 	
 	static String ProductName = "IPHONE 13 PRO";
+	
+	//Because main() is static.
+//A static method can directly use another static variable.
+//If it weren't static, you'd first need to create an object of SubmitAloneTest.
 
     public static void main(String[] args) throws InterruptedException {
+    	//Everything inside main() executes from top to bottom.
 
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         LandingPage homePage = new LandingPage(driver);
+        //"Create an object that represents the Login (Landing) page and give it the browser (driver) 
+        //so it can interact with the page."
         
         homePage.goTo();
         

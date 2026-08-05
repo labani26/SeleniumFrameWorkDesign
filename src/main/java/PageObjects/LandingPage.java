@@ -10,17 +10,23 @@ import AbstructComponents.AbstructComponent;
 
 public class LandingPage extends AbstructComponent {
 	
-	WebDriver driver;
+	//public Means: This class can be used from anywhere in the project.
 	
+	WebDriver driver;
+	//Class variable
+	
+	//constructor
 	public LandingPage(WebDriver driver) {
 		
 		 super(driver);
+		 //super(driver) : driver - Constructor parameter
 		 
 		//initialization
 		this.driver = driver;
 		PageFactory.initElements(driver,this);
 		//this - refers to current class driver(WebDriver driver)
-		//Find all the @FindBy elements and connect them with the webpage.
+		//PageFactory.initElements(driver,this); - Selenium connects all functions to the actual webpage.
+		//PageFactory.initElements(driver,this); - Find all the @FindBy elements and connect them with the webpage.
 	 
 	}
 
@@ -41,8 +47,12 @@ public class LandingPage extends AbstructComponent {
     	UserPassword.sendKeys(Password);
     	Submit.click();
     	ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+    	//The browser is now on the Product Catalogue page,
+    	//so create the Java object that represents that page.
     	return productCatalogue;
-     	
+     	//We return productCatalogue because after a successful login, 
+    	//the browser navigates to the Product Catalogue page.
+    	//To interact with that new page, we need its Page Object.
     }
     
     public void goTo() {
