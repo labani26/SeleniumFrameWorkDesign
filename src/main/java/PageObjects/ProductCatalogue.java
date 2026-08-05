@@ -37,7 +37,7 @@ public class ProductCatalogue extends AbstructComponent {
 	
 	By ProductBy = By.cssSelector(".mb-3");
 	By ProductAddToCart = By.cssSelector("button:last-of-type");
-	By ToastMessage = By.cssSelector("toast-container");
+	By ToastMessage = By.cssSelector("#toast-container");
 	By ProductIs = By.cssSelector(".ng-animating");
 	
 	public List<WebElement> getProductList(){

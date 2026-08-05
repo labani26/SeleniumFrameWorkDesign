@@ -17,34 +17,40 @@ public class AbstructComponent {
     WebDriver driver;
     WebDriverWait wait;
 
-    public AbstructComponent(WebDriver driver)
-    //constructor
-    {
-    	//initialization
+    // Constructor
+    public AbstructComponent(WebDriver driver) {
+
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    
-    @FindBy(css="\"[routerlink*='cart']\"")
+
+    // Cart button
+    @FindBy(css = "[routerlink*='cart']")
     WebElement CartHeader;
 
-    public void waitForElementToAppear(By findBy)
-    {
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    // Wait until element is visible
+    public void waitForElementToAppear(By findBy) {
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
-    
+
+    // Wait until element disappears
     public void waitForElementToDisappear(By findBy) {
-    	
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-    	wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
-    	
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(findBy));
     }
-    
-    public PageObjects.CartPage CartPage() {
-    	CartHeader.click();
-    	CartPage cartPage = new CartPage(driver);
-    	return cartPage;
+
+    // Wait until element is clickable
+    public void waitForElementToBeClickable(WebElement element) {
+
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    // Go to Cart Page
+    public CartPage CartPage() {
+
+        CartHeader.click();
+        return new CartPage(driver);
     }
 }

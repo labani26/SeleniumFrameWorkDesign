@@ -22,27 +22,35 @@ public class CheckoutPage extends AbstructComponent {
     @FindBy(css = "[placeholder='Select Country']")
     WebElement enterCountry;
 
-    By selectCountryResults = By.cssSelector(".ta-results");
-
-    @FindBy(css = ".ta-item.list-group-item.ng-star-inserted:last-child")
+    @FindBy(css = ".ta-item")
     WebElement selectCountry;
-    
-    @FindBy(css=".action__submit")
+
+    @FindBy(css = ".action__submit")
     WebElement OrderSubmit;
+
+    By results = By.cssSelector(".ta-results");
 
     public void selectCountry(String countryName) {
 
         Actions action = new Actions(driver);
         action.sendKeys(enterCountry, countryName).build().perform();
 
-        waitForElementToAppear(selectCountryResults);
+        waitForElementToAppear(results);
+
         selectCountry.click();
-        
+
+        // Wait until the dropdown disappears
+        waitForElementToDisappear(results);
+    }
+
+    public ConfirmationPage PlaceOrder() {
+
+        waitForElementToBeClickable(OrderSubmit);
+
+        OrderSubmit.click();
+
+        return new ConfirmationPage(driver);
     }
     
-    public ConfirmationPage PlaceOrder() {
-    	
-    	OrderSubmit.click();
-    	return new ConfirmationPage(driver);
-    }
+    
 }
