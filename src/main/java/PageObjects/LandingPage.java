@@ -47,6 +47,7 @@ public class LandingPage extends AbstructComponent {
     	UserPassword.sendKeys(Password);
     	Submit.click();
     	ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+    	//You are not creating another browser , You are only creating another Java object.
     	//The browser is now on the Product Catalogue page,
     	//so create the Java object that represents that page.
     	return productCatalogue;
