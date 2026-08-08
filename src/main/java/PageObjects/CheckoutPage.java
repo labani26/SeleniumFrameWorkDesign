@@ -11,6 +11,8 @@ import AbstructComponents.AbstructComponent;
 
 public class CheckoutPage extends AbstructComponent {
 
+//	This variable holds the browser driver.
+//	Remember, you don't create a new browser here.
     WebDriver driver;
 
     public CheckoutPage(WebDriver driver) {
@@ -19,12 +21,16 @@ public class CheckoutPage extends AbstructComponent {
         PageFactory.initElements(driver, this);
     }
 
+    //enter contry and select
     @FindBy(css = "[placeholder='Select Country']")
     WebElement enterCountry;
 
+    //This is only a locator.
+    //The country suggestions are located by .ta-results
     @FindBy(css = ".ta-item")
     WebElement selectCountry;
 
+    //This represents: order submit
     @FindBy(css = ".action__submit")
     WebElement OrderSubmit;
 
@@ -34,6 +40,8 @@ public class CheckoutPage extends AbstructComponent {
 
         Actions action = new Actions(driver);
         action.sendKeys(enterCountry, countryName).build().perform();
+        //Actually performs the action.
+        //Builds the action sequence.
 
         waitForElementToAppear(results);
 

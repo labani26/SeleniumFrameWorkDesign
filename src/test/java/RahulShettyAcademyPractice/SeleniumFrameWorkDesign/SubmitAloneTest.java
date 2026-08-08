@@ -29,6 +29,7 @@ public class SubmitAloneTest {
     	//Everything inside main() executes from top to bottom.
 
         WebDriver driver = new ChromeDriver();
+        //This creates the actual Chrome browser.
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
@@ -41,11 +42,16 @@ public class SubmitAloneTest {
         ProductCatalogue productCatalogue = homePage.LoginApplication("mail2labanisardar@gmail.com","Labani@26");
 
         List<WebElement>products = productCatalogue.getProductList();
+//        productCatalogue = your ProductCatalogue object
+//        getProductList() = method that waits for products and returns the list
+//        List<WebElement> products = variable that receives that list
         
 
         productCatalogue.AddProductToCart(ProductName);
         
         CartPage cartPage = productCatalogue.CartPage();   
+        //Because your CartPage() method returns a CartPage object:
+        //So your test needs to receive and store that returned object.
         
         Boolean match = cartPage.VerifyProductDisplay(ProductName);    
         Assert.assertTrue(match);

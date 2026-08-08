@@ -15,6 +15,7 @@ public class CartPage extends AbstructComponent{
 
 	WebDriver driver;
 	
+	
 	//constructor
 	public CartPage(WebDriver driver) {
 		super(driver);
@@ -32,8 +33,11 @@ public class CartPage extends AbstructComponent{
 	@FindBy(xpath="//button[normalize-space()='Checkout']")
 	WebElement CheckOut;
 	
+	//This is a locator for the animation/loading element.
 	By InvisibleProduct = By.cssSelector(".ng-animating");
 	
+	
+	//Because we're asking a yes/no question: "Is this product present in the cart?"
 	public Boolean VerifyProductDisplay(String ProductName) {
 		
 		boolean match =  VerifyProductInCart.stream()
