@@ -1,72 +1,64 @@
+
 package RahulShettyAcademyPractice.SeleniumFrameWorkDesign;
 
+import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import PageObjects.CartPage;
 import PageObjects.CheckoutPage;
 import PageObjects.ConfirmationPage;
 import PageObjects.LandingPage;
 import PageObjects.ProductCatalogue;
+import RahulShettyacademy.TestComponents.BaseTest;
 
-public class SubmitAloneTest {
-	
-	static String ProductName = "IPHONE 13 PRO";
-	
-	//Because main() is static.
-//A static method can directly use another static variable.
-//If it weren't static, you'd first need to create an object of SubmitAloneTest.
+public class SubmitAloneTest extends BaseTest {
 
-    public static void main(String[] args) throws InterruptedException {
-    	//Everything inside main() executes from top to bottom.
+    @Test
+    public void SubmitOrder() throws IOException, InterruptedException {
+    	
+    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        WebDriver driver = new ChromeDriver();
-        //This creates the actual Chrome browser.
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        String productName = "IPHONE 13 PRO";
 
-        LandingPage homePage = new LandingPage(driver);
-        //"Create an object that represents the Login (Landing) page and give it the browser (driver) 
-        //so it can interact with the page."
-        
-        homePage.goTo();
-        
-        ProductCatalogue productCatalogue = homePage.LoginApplication("mail2labanisardar@gmail.com","Labani@26");
+        // Launch application
+        LandingPage landingPage = launchApplication();
 
-        List<WebElement>products = productCatalogue.getProductList();
-//        productCatalogue = your ProductCatalogue object
-//        getProductList() = method that waits for products and returns the list
-//        List<WebElement> products = variable that receives that list
-        
+        // Login
+        ProductCatalogue productCatalogue = landingPage.LoginApplication(
+                "mail2labanisardar@gmail.com",
+                "Labani@26"
+        );
 
-        productCatalogue.AddProductToCart(ProductName);
-        
-        CartPage cartPage = productCatalogue.CartPage();   
-        //Because your CartPage() method returns a CartPage object:
-        //So your test needs to receive and store that returned object.
-        
-        Boolean match = cartPage.VerifyProductDisplay(ProductName);    
+        // Add product to cart
+        productCatalogue.AddProductToCart(productName);
+
+        // Go to Cart
+        CartPage cartPage = productCatalogue.CartPage();
+
+        // Verify product is displayed in cart
+        Boolean match = cartPage.VerifyProductDisplay(productName);
         Assert.assertTrue(match);
-        
-        CheckoutPage CheckoutPage = cartPage.GoToCheckOut();
-        CheckoutPage.selectCountry("India");
 
-        Thread.sleep(3000);   // Temporary test
+        // Go to Checkout
+        CheckoutPage checkoutPage = cartPage.GoToCheckOut();
 
-        ConfirmationPage confirmationPage = CheckoutPage.PlaceOrder();
-      
+        // Select country
+        checkoutPage.selectCountry("India");
+
+//        // Temporary wait
+//        Thread.sleep(3000);
+
+        // Place order
+        ConfirmationPage confirmationPage = checkoutPage.PlaceOrder();
+
+        // Verify confirmation message
         String output = confirmationPage.verifyConfirmationMessage();
 
         Assert.assertEquals(output, "THANKYOU FOR THE ORDER.");
-        
-        //driver.quit();
     }
 }
+

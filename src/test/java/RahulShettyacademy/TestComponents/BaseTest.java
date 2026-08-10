@@ -11,13 +11,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import PageObjects.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
 
     public WebDriver driver;
 
-    public void initializeDriver() throws IOException {	
+    public WebDriver initializeDriver() throws IOException {	
 //    	initializeDriver()
 //    	This method will perform your browser setup.
 
@@ -60,6 +61,20 @@ public class BaseTest {
         driver.manage().window().maximize();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		return driver;
+    }
+    
+    public LandingPage launchApplication() throws IOException {
+    	
+    	driver = initializeDriver();
+        LandingPage homePage = new LandingPage(driver);
+          //"Create an object that represents the Login (Landing) page and give it the browser (driver) 
+          //so it can interact with the page."
+        homePage.goTo();
+        return homePage;
+    	
     }
 }
+
+
 
