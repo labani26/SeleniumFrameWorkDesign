@@ -27,8 +27,10 @@ public class BaseTest {
 //        We will use it to read your:
 //        Globaldata.properties
 
-        FileInputStream file = new FileInputStream       		
-        ("C:\\Users\\Labani sardar\\eclipse-workspace\\SeleniumFrameWorkDesign\\src\\main\\java\\RahulShettyAcademy\\resources\\Globaldata.properties");
+        FileInputStream file = new FileInputStream(
+                System.getProperty("user.dir")
+                + "\\src\\main\\java\\RahulShettyAcademy\\resources\\Globaldata.properties"
+        );
         //This opens your Globaldata.properties file so Java can read it.
 
         prop.load(file);
