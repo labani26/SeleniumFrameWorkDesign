@@ -34,6 +34,12 @@ public class AbstructComponent {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
+    
+    // Wait until element is visible
+    public void waitForWebElementToAppear(WebElement findBy) {
+
+        wait.until(ExpectedConditions.visibilityOf(findBy));
+    }
 
     // Wait until element disappears
     public void waitForElementToDisappear(By findBy) {

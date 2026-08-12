@@ -29,7 +29,7 @@ public class SubmitAloneTest extends BaseTest {
 
         // Login
         ProductCatalogue productCatalogue = landingPage.LoginApplication(
-                "mail2labanisardar@gmail.com",
+        		"mail2labanisardar@gmail.com",
                 "Labani@26"
         );
 

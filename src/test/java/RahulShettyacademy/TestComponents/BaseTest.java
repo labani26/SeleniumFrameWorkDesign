@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import PageObjects.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -17,6 +19,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class BaseTest {
 
     public WebDriver driver;
+    public LandingPage homePage;
 
     public WebDriver initializeDriver() throws IOException {	
 //    	initializeDriver()
@@ -64,14 +67,24 @@ public class BaseTest {
 		return driver;
     }
     
+    @BeforeMethod
+    
     public LandingPage launchApplication() throws IOException {
     	
     	driver = initializeDriver();
-        LandingPage homePage = new LandingPage(driver);
+         homePage = new LandingPage(driver);
           //"Create an object that represents the Login (Landing) page and give it the browser (driver) 
           //so it can interact with the page."
         homePage.goTo();
         return homePage;
+    	
+    }
+    
+    @AfterMethod
+    
+    public void TearDown() {
+    	
+    	driver.close();
     	
     }
 }

@@ -42,6 +42,9 @@ public class LandingPage extends AbstructComponent {
     @FindBy(id="login")
     WebElement Submit;
     
+    @FindBy(css="[class*='flyInOut']")
+    WebElement ErrorMessage;
+    
     public ProductCatalogue LoginApplication(String Email, String Password) {
     
     	UserEmail.sendKeys(Email);
@@ -56,6 +59,12 @@ public class LandingPage extends AbstructComponent {
     	//the browser navigates to the Product Catalogue page.
     	//To interact with that new page, we need its Page Object.
     }
+    
+   public String  getErrorMessage() {
+	   
+	   waitForWebElementToAppear(ErrorMessage);
+	   return ErrorMessage.getText();
+   }
     
     public void goTo() {
     	
