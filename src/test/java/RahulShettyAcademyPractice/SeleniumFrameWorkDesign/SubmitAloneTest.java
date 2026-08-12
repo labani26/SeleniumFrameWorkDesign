@@ -12,24 +12,26 @@ import PageObjects.CartPage;
 import PageObjects.CheckoutPage;
 import PageObjects.ConfirmationPage;
 import PageObjects.LandingPage;
+import PageObjects.OrderPage;
 import PageObjects.ProductCatalogue;
 import RahulShettyacademy.TestComponents.BaseTest;
 
 public class SubmitAloneTest extends BaseTest {
 
+	String productName = "IPHONE 13 PRO";
+	
+    LandingPage landingPage;
+
     @Test
     public void SubmitOrder() throws IOException, InterruptedException {
-    	
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        String productName = "IPHONE 13 PRO";
 
-        // Launch application
-        LandingPage landingPage = launchApplication();
+        
+        
+        landingPage = launchApplication();
 
-        // Login
         ProductCatalogue productCatalogue = landingPage.LoginApplication(
-        		"mail2labanisardar@gmail.com",
+                "mail2labanisardar@gmail.com",
                 "Labani@26"
         );
 
@@ -37,7 +39,7 @@ public class SubmitAloneTest extends BaseTest {
         productCatalogue.AddProductToCart(productName);
 
         // Go to Cart
-        CartPage cartPage = productCatalogue.CartPage();
+        CartPage cartPage = productCatalogue.goToCartPage();
 
         // Verify product is displayed in cart
         Boolean match = cartPage.VerifyProductDisplay(productName);
@@ -60,5 +62,24 @@ public class SubmitAloneTest extends BaseTest {
 
         Assert.assertEquals(output, "THANKYOU FOR THE ORDER.");
     }
+    
+    
+    @Test(dependsOnMethods = {"SubmitOrder"})
+    public void OrderHistoryTest() {
+
+        ProductCatalogue productCatalogue = landingPage.LoginApplication(
+                "mail2labanisardar@gmail.com",
+                "Labani@26"
+        );
+        
+     // Go to Order
+        OrderPage orderPage = productCatalogue.goToOrderPage();
+        
+        Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
+
+    }
+    
+    
 }
+
 

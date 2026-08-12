@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import PageObjects.CartPage;
+import PageObjects.OrderPage;
 
 public class AbstructComponent {
 
@@ -21,7 +22,9 @@ public class AbstructComponent {
     public AbstructComponent(WebDriver driver) {
 
         this.driver = driver;
+
         PageFactory.initElements(driver, this);
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
@@ -29,17 +32,24 @@ public class AbstructComponent {
     @FindBy(css = "[routerlink*='cart']")
     WebElement CartHeader;
 
+    // Order Header
+    @FindBy(css = "[routerlink*='myorders']")
+    WebElement OrderHeader;
+
+
     // Wait until element is visible
     public void waitForElementToAppear(By findBy) {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
-    
-    // Wait until element is visible
+
+
+    // Wait until WebElement is visible
     public void waitForWebElementToAppear(WebElement findBy) {
 
         wait.until(ExpectedConditions.visibilityOf(findBy));
     }
+
 
     // Wait until element disappears
     public void waitForElementToDisappear(By findBy) {
@@ -47,16 +57,32 @@ public class AbstructComponent {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(findBy));
     }
 
+
     // Wait until element is clickable
     public void waitForElementToBeClickable(WebElement element) {
 
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+
     // Go to Cart Page
-    public CartPage CartPage() {
+    public CartPage goToCartPage() {
 
         CartHeader.click();
-        return new CartPage(driver);
+
+        CartPage cartPage = new CartPage(driver);
+
+        return cartPage;
+    }
+
+
+    // Go to Order Page
+    public OrderPage goToOrderPage() {
+
+        OrderHeader.click();
+
+        OrderPage orderPage = new OrderPage(driver);
+
+        return orderPage;
     }
 }
