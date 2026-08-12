@@ -64,42 +64,63 @@ public class StandAloneTest {
 
         Assert.assertTrue(match);
         
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ngx-toastr")));
-        //Wait until the success message (green toast notification) is no longer visible.
-        
-     // Click Checkout
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//button[normalize-space()='Checkout']")));
-        
-        driver.findElement(By.xpath("//button[normalize-space()='Checkout']")).click();
+     // Wait until success message disappears
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.cssSelector(".ngx-toastr")));
+
+        // Click Checkout
+        WebElement checkout = wait.until(
+                ExpectedConditions.elementToBeClickable(
+                        By.xpath("//button[normalize-space()='Checkout']")));
+
+        checkout.click();
 
         // Enter country
-        WebElement country = driver.findElement(By.cssSelector("[placeholder='Select Country']"));
+        WebElement country = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector("[placeholder='Select Country']")));
+
         country.sendKeys("India");
 
         // Wait for country suggestions
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-        
-     // Click the India suggestion
-        driver.findElement(By.cssSelector(".ta-item.list-group-item.ng-star-inserted:last-child")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(".ta-results")));
 
-     // Wait until suggestions disappear
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ta-results")));
+        // Click India suggestion
+        driver.findElement(
+                By.cssSelector(".ta-item.list-group-item.ng-star-inserted:last-child"))
+                .click();
 
-        // Wait until Place Order button is clickable
+        // Wait until suggestions disappear
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.cssSelector(".ta-results")));
+
+        // IMPORTANT: wait for backdrop to disappear
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.cssSelector(".ta-backdrop")));
+
+        // Wait until Place Order is clickable
         WebElement placeOrder = wait.until(
-                ExpectedConditions.elementToBeClickable(By.cssSelector(".action__submit")));
+                ExpectedConditions.elementToBeClickable(
+                        By.cssSelector(".action__submit")));
+
+        // Scroll it into view
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block: 'center'});",
+                        placeOrder);
 
         // Click Place Order
         placeOrder.click();
 
         // Verify confirmation
         String output = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".hero-primary")))
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector(".hero-primary")))
                 .getText();
 
         Assert.assertEquals(output, "THANKYOU FOR THE ORDER.");
-        
+
         driver.quit();
     }
 }
