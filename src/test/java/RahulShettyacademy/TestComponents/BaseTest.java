@@ -67,7 +67,7 @@ public class BaseTest {
 		return driver;
     }
     
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     
     public LandingPage launchApplication() throws IOException {
     	
@@ -80,7 +80,7 @@ public class BaseTest {
     	
     }
     
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     
     public void TearDown() {
     	

@@ -2,15 +2,21 @@
 
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="Suite">
+<suite parallel = "tests" name="Suite">
 
-    <test name="Submit Alone Test">
+<groups>
+<run>
+<include name = "ErrorHandling" />
+</run>
+</groups>
+
+    <test thread-count = "5" name="Submit Alone Test">
         <classes>
             <class name="RahulShettyacademyPractice.SeleniumFrameWorkDesign.SubmitAloneTest"/>
         </classes>
     </test>
 
-<test name="Error Validation Test">
+<test thread-count = "5" name="Error Validation Test">
         <classes>
             <class name="RahulShettyacademyPractice.SeleniumFrameWorkDesign.ErrorValidations"/>
         </classes>
