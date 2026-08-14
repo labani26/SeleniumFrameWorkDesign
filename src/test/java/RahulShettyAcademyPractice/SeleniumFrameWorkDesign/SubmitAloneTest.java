@@ -3,6 +3,7 @@ package RahulShettyAcademyPractice.SeleniumFrameWorkDesign;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -25,23 +26,21 @@ public class SubmitAloneTest extends BaseTest {
 
     @Test(dataProvider="getData", groups="Purchase")
     
-    public void SubmitOrder(String Email, String Password, String ProductName)  throws IOException, InterruptedException {
+    public void SubmitOrder(HashMap <String,String> input)  throws IOException, InterruptedException {
 
-
-        
-        
+ 
         landingPage = launchApplication();
 
-        ProductCatalogue productCatalogue = landingPage.LoginApplication(Email,Password);
+        ProductCatalogue productCatalogue = landingPage.LoginApplication(input.get("Email"),input.get("Password"));
 
         // Add product to cart
-        productCatalogue.AddProductToCart(productName);
+        productCatalogue.AddProductToCart(input.get("Product"));
 
         // Go to Cart
         CartPage cartPage = productCatalogue.goToCartPage();
 
         // Verify product is displayed in cart
-        Boolean match = cartPage.VerifyProductDisplay(productName);
+        Boolean match = cartPage.VerifyProductDisplay(input.get("Product"));
         Assert.assertTrue(match);
 
         // Go to Checkout
@@ -82,11 +81,28 @@ public class SubmitAloneTest extends BaseTest {
     
     public Object [] [] getData(){
     	
-    	return new Object [] [] {{ "mail2labanisardar@gmail.com","Labani@26", "IPHONE 13 PRO"}, {"labanisardar@gmail.com","Labani@26", "IPHONE 13 PRO"}}
+    	HashMap<String,String> map = new HashMap<String,String>();
+    	map.put("Email" , "mail2labanisardar@gmail.com" );
+    	map.put("Password", "Labani@26");
+    	map.put("Product", "IPHONE 13 PRO");
+    	
+    	HashMap<String,String> map1 = new HashMap<String,String>();
+    	map1.put("Email" , "labanisardar@gmail.com" );
+    	map1.put("Password", "Labani@26");
+    	map1.put("Product", "ZARA COAT 3");
+    	
+    	return new Object [] [] {{map}, {map1}};
     	
     }
     
-    
+//    @DataProvider
+//    public Object [][]getdata(){
+//    	return new Object [][] {
+//    		                    {"mail2labanisardar@gmail.com","Labani@26","ZARA COAT 3"},
+//    		                    {"labanisardar@gmail.com","Labani@26","ZARA COAT 3"}
+//    		                    };
+//    }
+//    
 }
 
 
