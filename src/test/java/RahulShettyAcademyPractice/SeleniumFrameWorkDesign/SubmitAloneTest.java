@@ -6,6 +6,7 @@ import java.time.Duration;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import PageObjects.CartPage;
@@ -22,18 +23,16 @@ public class SubmitAloneTest extends BaseTest {
 	
     LandingPage landingPage;
 
-    @Test
-    public void SubmitOrder() throws IOException, InterruptedException {
+    @Test(dataProvider="getData", groups="Purchase")
+    
+    public void SubmitOrder(String Email, String Password, String ProductName)  throws IOException, InterruptedException {
 
 
         
         
         landingPage = launchApplication();
 
-        ProductCatalogue productCatalogue = landingPage.LoginApplication(
-                "mail2labanisardar@gmail.com",
-                "Labani@26"
-        );
+        ProductCatalogue productCatalogue = landingPage.LoginApplication(Email,Password);
 
         // Add product to cart
         productCatalogue.AddProductToCart(productName);
@@ -77,6 +76,14 @@ public class SubmitAloneTest extends BaseTest {
         
         Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
 
+    }
+    
+    @DataProvider
+    
+    public Object [] [] getData(){
+    	
+    	return new Object [] [] {{ "mail2labanisardar@gmail.com","Labani@26", "IPHONE 13 PRO"}, {"labanisardar@gmail.com","Labani@26", "IPHONE 13 PRO"}}
+    	
     }
     
     
