@@ -1,11 +1,15 @@
 
 package RahulShettyAcademyPractice.SeleniumFrameWorkDesign;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -21,6 +25,8 @@ import RahulShettyacademy.TestComponents.BaseTest;
 import RahulShettyacademy.data.DataReader;
 
 public class SubmitAloneTest extends BaseTest {
+
+	private static final String FileUtiles = null;
 
 	String productName = "IPHONE 13 PRO";
 	
@@ -77,6 +83,16 @@ public class SubmitAloneTest extends BaseTest {
         
         Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
 
+    }
+    
+    public String GetScreenShot(String testCasename) throws IOException {
+    	
+    	TakesScreenshot ss = (TakesScreenshot)driver;
+    	File source = ss.getScreenshotAs(OutputType.FILE);
+    	File file = new File( System.getProperty("user.dir") + "//reports//"+ testCasename + ".png");
+    	FileUtils.copyFile(source, file);
+        return System.getProperty("user.dir") + "//reports//"+ testCasename + ".png" ;
+        
     }
     
     @DataProvider
