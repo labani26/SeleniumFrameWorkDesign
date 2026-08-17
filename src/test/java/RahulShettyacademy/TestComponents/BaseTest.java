@@ -1,17 +1,25 @@
 
 package RahulShettyacademy.TestComponents;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import PageObjects.LandingPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -65,6 +73,26 @@ public class BaseTest {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		return driver;
+    }
+    
+    public List<HashMap<String, String>> getJsonDataToMap() throws IOException {
+
+    	//read json to string
+        String JsonContent = FileUtils.readFileToString(
+                new File(System.getProperty("user.dir")
+                + "\\src\\test\\java\\RahulShettyacademy\\data\\PurchaseOrder.json"),
+                StandardCharsets.UTF_8);
+        
+//StandardCharsets.UTF_8 : simply tells Java how to read the text inside your JSON file.
+        
+        //String to hashMap Jackson databind 
+        
+        ObjectMapper mapper = new ObjectMapper();
+        List<HashMap<String, String>>data = mapper.readValue(JsonContent, new TypeReference<List<HashMap<String, String>>>(){
+        	
+        });
+
+        return data;
     }
     
     @BeforeMethod(alwaysRun = true)

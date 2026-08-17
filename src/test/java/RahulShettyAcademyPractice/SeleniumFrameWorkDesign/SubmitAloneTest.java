@@ -4,6 +4,7 @@ package RahulShettyAcademyPractice.SeleniumFrameWorkDesign;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,6 +18,7 @@ import PageObjects.LandingPage;
 import PageObjects.OrderPage;
 import PageObjects.ProductCatalogue;
 import RahulShettyacademy.TestComponents.BaseTest;
+import RahulShettyacademy.data.DataReader;
 
 public class SubmitAloneTest extends BaseTest {
 
@@ -78,22 +80,21 @@ public class SubmitAloneTest extends BaseTest {
     }
     
     @DataProvider
-    
-    public Object [] [] getData(){
-    	
-    	HashMap<String,String> map = new HashMap<String,String>();
-    	map.put("Email" , "mail2labanisardar@gmail.com" );
-    	map.put("Password", "Labani@26");
-    	map.put("Product", "IPHONE 13 PRO");
-    	
-    	HashMap<String,String> map1 = new HashMap<String,String>();
-    	map1.put("Email" , "labanisardar@gmail.com" );
-    	map1.put("Password", "Labani@26");
-    	map1.put("Product", "ZARA COAT 3");
-    	
-    	return new Object [] [] {{map}, {map1}};
-    	
+    public Object[][] getData() throws IOException {
+
+        DataReader dataReader = new DataReader();
+
+        List<HashMap<String, String>> data =
+                dataReader.getJsonDataToMap(
+                        System.getProperty("user.dir")
+                        + "\\src\\test\\java\\RahulShettyacademy\\data\\PurchaseOrder.json");
+
+        return new Object[][] { {data.get(0)},{data.get(1)} };
+        
+      }
+        
     }
+    
     
 //    @DataProvider
 //    public Object [][]getdata(){
@@ -103,6 +104,15 @@ public class SubmitAloneTest extends BaseTest {
 //    		                    };
 //    }
 //    
-}
+//	HashMap<String,String> map = new HashMap<String,String>();
+//	map.put("Email" , "mail2labanisardar@gmail.com" );
+//	map.put("Password", "Labani@26");
+//	map.put("Product", "IPHONE 13 PRO");
+//	
+//	HashMap<String,String> map1 = new HashMap<String,String>();
+//	map1.put("Email" , "labanisardar@gmail.com" );
+//	map1.put("Password", "Labani@26");
+//	map1.put("Product", "ZARA COAT 3");
+
 
 
